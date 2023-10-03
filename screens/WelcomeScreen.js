@@ -5,7 +5,7 @@ import SafeAreaView from '../components/SafeAreaView/SafeAreaView';
 import { colors } from '../assets/constants/colors';
 import { useEffect } from 'react';
 
-const WelcomeScreen = () => {
+const WelcomeScreen = ({ navigation }) => {
     const ringOnePadding = useSharedValue(0);
     const ringTwoPadding = useSharedValue(0);
 
@@ -19,6 +19,10 @@ const WelcomeScreen = () => {
         setTimeout(() => {
             ringTwoPadding.value = withSpring(25);
         }, 300);
+
+        setTimeout(() => {
+            navigation.navigate('Home');
+        }, 2000);
     }, []);
 
     return (
