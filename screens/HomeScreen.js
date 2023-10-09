@@ -1,23 +1,17 @@
-import { useEffect, useState } from 'react';
-import {
-    FlatList,
-    Image,
-    ScrollView,
-    StyleSheet,
-    Text,
-    View,
-} from 'react-native';
-import SafeAreaView from '../components/SafeAreaView/SafeAreaView';
-import HomeTopBar from '../components/HomeTopBar/HomeTopBar';
-import HomeWelcomeText from '../components/HomeWelcomeText/HomeWelcomeText';
-import HomeInput from '../components/HomeInput/HomeInput';
-import { getCategories } from '../lib/getCategories';
-import Categories from '../components/Categories/Categories';
-import Recipes from '../components/Recipes/Recipes';
+import { useEffect, useState } from "react";
+import { FlatList, StyleSheet } from "react-native";
+import SafeAreaView from "../components/SafeAreaView/SafeAreaView";
+import HomeTopBar from "../components/HomeTopBar/HomeTopBar";
+import HomeWelcomeText from "../components/HomeWelcomeText/HomeWelcomeText";
+import HomeInput from "../components/HomeInput/HomeInput";
+import { getCategories } from "../lib/getCategories";
+import Categories from "../components/Categories/Categories";
+import Recipes from "../components/Recipes/Recipes";
 
 const HomeScreen = () => {
     const [categories, setCategories] = useState([]);
-    const [activeCategory, setActiveCategory] = useState('');
+    const [activeCategory, setActiveCategory] = useState("");
+    const [inputText, setInputText] = useState("");
 
     useEffect(() => {
         (async () => {
@@ -35,7 +29,10 @@ const HomeScreen = () => {
                     <>
                         <HomeTopBar />
                         <HomeWelcomeText />
-                        <HomeInput />
+                        <HomeInput
+                            inputText={inputText}
+                            setInputText={setInputText}
+                        />
                         {categories.length > 0 && (
                             <Categories
                                 categories={categories}
@@ -46,7 +43,10 @@ const HomeScreen = () => {
                     </>
                 }
                 ListFooterComponent={
-                    <Recipes activeCategory={activeCategory} />
+                    <Recipes
+                        activeCategory={activeCategory}
+                        inputText={inputText}
+                    />
                 }
             ></FlatList>
         </SafeAreaView>
