@@ -5,7 +5,9 @@ const Recipe = ({ recipe }) => {
     const navigation = useNavigation();
 
     const onPressCard = () => {
-        navigation.navigate("RecipeDetail");
+        navigation.navigate("RecipeDetail", {
+            recipeId: recipe.idMeal,
+        });
     };
 
     return (
