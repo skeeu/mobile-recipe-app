@@ -6,36 +6,60 @@ import {
     Text,
     TouchableOpacity,
     View,
-} from "react-native";
-import SafeAreaView from "../components/SafeAreaView/SafeAreaView";
-import Feather from "react-native-vector-icons/Feather";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
-import Octicons from "react-native-vector-icons/Octicons";
-import AdditionaRecipeDataCard from "../components/AdditionaRecipeDataCard/AdditionaRecipeDataCard";
-import Ingredients from "../components/Ingredients/Ingredients";
-import VideoInstruction from "../components/VideoInstruction/VideoInstruction";
-import { useNavigation } from "@react-navigation/native";
-import { useState, useEffect } from "react";
-import { getRecipeById } from "../lib/getRecipeById";
+} from 'react-native';
+import SafeAreaView from '../components/SafeAreaView/SafeAreaView';
+import Feather from 'react-native-vector-icons/Feather';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+import Octicons from 'react-native-vector-icons/Octicons';
+import AdditionaRecipeDataCard from '../components/AdditionaRecipeDataCard/AdditionaRecipeDataCard';
+import Ingredients from '../components/Ingredients/Ingredients';
+import VideoInstruction from '../components/VideoInstruction/VideoInstruction';
+import { useNavigation } from '@react-navigation/native';
+import { useState, useEffect } from 'react';
+import { getRecipeById } from '../lib/getRecipeById';
 
 const additionalData = [
     {
-        title: "35",
-        subtitle: "Mins",
-        icon: <Feather name="clock" size={26} />,
+        title: '35',
+        subtitle: 'Mins',
+        icon: (
+            <Feather
+                name="clock"
+                size={26}
+            />
+        ),
     },
     {
-        title: "03",
-        subtitle: "Servings",
-        icon: <Ionicons name="people" size={26} />,
+        title: '03',
+        subtitle: 'Servings',
+        icon: (
+            <Ionicons
+                name="people"
+                size={26}
+            />
+        ),
     },
     {
-        title: "103",
-        subtitle: "Cal",
-        icon: <SimpleLineIcons name="fire" size={26} />,
+        title: '103',
+        subtitle: 'Cal',
+        icon: (
+            <SimpleLineIcons
+                name="fire"
+                size={26}
+            />
+        ),
     },
-    { title: "", subtitle: "Easy", icon: <Octicons name="stack" size={26} /> },
+    {
+        title: '',
+        subtitle: 'Easy',
+        icon: (
+            <Octicons
+                name="stack"
+                size={26}
+            />
+        ),
+    },
 ];
 
 const RecipeDetailScreen = ({ route }) => {
@@ -43,7 +67,7 @@ const RecipeDetailScreen = ({ route }) => {
     const [isFavorite, setIsFavorite] = useState(false);
     const [recipe, setRecipe] = useState(null);
     const youtubeVideoId =
-        recipe?.strYoutube && recipe.strYoutube.split("=")[1];
+        recipe?.strYoutube && recipe.strYoutube.split('=')[1];
 
     useEffect(() => {
         (async () => {
@@ -63,17 +87,20 @@ const RecipeDetailScreen = ({ route }) => {
                     onPress={() => navigation.goBack()}
                     style={styles.headerIcon}
                 >
-                    <Ionicons name="chevron-back" size={34} />
+                    <Ionicons
+                        name="chevron-back"
+                        size={30}
+                    />
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => setIsFavorite(!isFavorite)}
                     style={styles.headerIcon}
                 >
-                    {isFavorite ? (
-                        <Ionicons name="heart" color={"red"} size={34} />
-                    ) : (
-                        <Ionicons name="heart-outline" size={34} />
-                    )}
+                    <Ionicons
+                        name={isFavorite ? 'heart' : 'heart-outline'}
+                        color={isFavorite ? 'red' : '#000'}
+                        size={30}
+                    />
                 </TouchableOpacity>
             </SafeAreaView>
             <Image
@@ -91,7 +118,10 @@ const RecipeDetailScreen = ({ route }) => {
                 >
                     {additionalData.map((data, index) => {
                         return (
-                            <AdditionaRecipeDataCard key={index} {...data} />
+                            <AdditionaRecipeDataCard
+                                key={index}
+                                {...data}
+                            />
                         );
                     })}
                 </ScrollView>
@@ -108,28 +138,28 @@ const RecipeDetailScreen = ({ route }) => {
 export default RecipeDetailScreen;
 const styles = StyleSheet.create({
     header: {
-        position: "absolute",
-        justifyContent: "space-between",
-        flexDirection: "row",
+        position: 'absolute',
+        justifyContent: 'space-between',
+        flexDirection: 'row',
         left: 20,
         right: 20,
         top: 20,
         zIndex: 1,
     },
-    headerIcon: { backgroundColor: "#fff", padding: 8, borderRadius: 99 },
+    headerIcon: { backgroundColor: '#fff', padding: 8, borderRadius: 99 },
     container: {
         flex: 1,
     },
     recipeImage: {
-        alignSelf: "center",
-        width: "100%",
+        alignSelf: 'center',
+        width: '100%',
         height: 400,
         borderBottomLeftRadius: 30,
         borderBottomRightRadius: 30,
     },
     content: { paddingHorizontal: 15, marginTop: 32, gap: 15 },
-    title: { fontWeight: "800", fontSize: 28 },
-    subhead: { fontWeight: "800", fontSize: 22, marginBottom: 16 },
-    country: { color: "gray", fontSize: 16 },
-    additionalDataContent: { width: "100%", justifyContent: "space-around" },
+    title: { fontWeight: '800', fontSize: 28 },
+    subhead: { fontWeight: '800', fontSize: 22, marginBottom: 16 },
+    country: { color: 'gray', fontSize: 16 },
+    additionalDataContent: { width: '100%', justifyContent: 'space-around' },
 });
