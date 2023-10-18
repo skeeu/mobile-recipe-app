@@ -1,23 +1,30 @@
-import { useEffect, useState } from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
-import { getRecipesByCategory } from "../../lib/getRecipesByCategory";
-import Recipe from "../Recipe/Recipe";
-const Recipes = ({ activeCategory, inputText }) => {
-    const [recipes, setRecipes] = useState([]);
+import { useEffect, useState } from 'react';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { getRecipesByCategory } from '../../lib/getRecipesByCategory';
+import Recipe from '../Recipe/Recipe';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchRecipes } from '../../store/recipesSlice';
+const Recipes = ({ inputText }) => {
     const [showingRecipes, setShowingRecipes] = useState([]);
 
+    const dispatch = useDispatch();
+    const activeCategory = useSelector(
+        (state) => state.categories.activeCategory
+    );
+    const recipes = useSelector((state) => state.recipes.recipes);
+
     useEffect(() => {
-        (async () => {
-            if (activeCategory) {
-                const res = await getRecipesByCategory(activeCategory);
-                setRecipes(res.meals);
-                setShowingRecipes(res.meals);
-            }
-        })();
+        if (activeCategory.trim() !== '') {
+            dispatch(fetchRecipes(activeCategory));
+        }
     }, [activeCategory]);
 
     useEffect(() => {
-        if (inputText.trim() !== "" && recipes.length > 0) {
+        setShowingRecipes(recipes);
+    }, [recipes]);
+
+    useEffect(() => {
+        if (inputText.trim() !== '' && recipes.length > 0) {
             const newShowingRecipes = recipes.filter((recipe) => {
                 return recipe.strMeal
                     .toLowerCase()
@@ -33,6 +40,7 @@ const Recipes = ({ activeCategory, inputText }) => {
             <FlatList
                 data={showingRecipes}
                 numColumns={2}
+                initialNumToRender={8}
                 renderItem={({ item }) => {
                     return <Recipe recipe={item} />;
                 }}
@@ -50,14 +58,14 @@ const styles = StyleSheet.create({
         gap: 20,
     },
     heading: {
-        fontWeight: "600",
+        fontWeight: '600',
         fontSize: 20,
     },
     recipeList: {
         gap: 18,
     },
     recipeListColumnWrapper: {
-        justifyContent: "space-between",
+        justifyContent: 'space-between',
         gap: 12,
     },
 });
